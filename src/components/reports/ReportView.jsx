@@ -162,7 +162,12 @@ export function ReportView({ project }) {
 
   return (
     <div className="space-y-4">
-      <FilterBar label="Report filters">
+      <FilterBar
+        label="Report filters"
+        collapsible
+        activeCount={[projectParam && !project, categoryName, type].filter(Boolean).length}
+        summary={rangeLabel}
+      >
         <DateRangeFilter range={range} />
         {!project && <ProjectFilter active={active} archived={archived} value={projectParam} onChange={setProjectParam} />}
         <SelectField label="Category" value={categoryName} onChange={(event) => setCategoryName(event.target.value)}>

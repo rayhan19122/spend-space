@@ -112,8 +112,8 @@ export function TransactionBrowser({ project }) {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="min-w-0 flex-1 sm:max-w-xs">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0 flex-1 sm:max-w-sm">
           <TextField
             label={project ? `Search ${project.name}` : 'Search transactions'}
             hideLabel
@@ -123,19 +123,24 @@ export function TransactionBrowser({ project }) {
             onChange={(event) => setSearchText(event.target.value)}
           />
         </div>
-        <div className="flex gap-2">
+        <div className="grid grid-cols-2 gap-2 sm:flex">
           <Button onClick={exportCsv} loading={exporting} disabled={!data?.total}>
             <Download className="size-4" aria-hidden="true" /> Export
           </Button>
           {!isReadOnly && (
             <Button variant="primary" onClick={() => quickAdd.open({ projectId: project?.id })}>
-              <Plus className="size-4" aria-hidden="true" /> Add
+              <Plus className="size-4" aria-hidden="true" /> Add transaction
             </Button>
           )}
         </div>
       </div>
 
-      <FilterBar label="Transaction filters">
+      <FilterBar
+        label="Transaction filters"
+        collapsible
+        activeCount={[projectParam && !project, categoryName, type, paymentMethod, range.preset !== 'all'].filter(Boolean).length}
+        summary={SORT_OPTIONS.find((option) => option.value === sort)?.label}
+      >
         {!project && <ProjectFilter active={active} archived={archived} value={projectParam} onChange={setProjectParam} allLabel="All projects" />}
         <SelectField label="Category" value={categoryName} onChange={(event) => setCategoryName(event.target.value)}>
           <option value="">All categories</option>
@@ -152,7 +157,7 @@ export function TransactionBrowser({ project }) {
         <DateRangeFilter range={range} />
       </FilterBar>
 
-      <Card className="p-4">
+      <Card className="p-4 lg:p-5">
         {error ? (
           <ErrorState error={error} onRetry={refetch} />
         ) : isPending ? (

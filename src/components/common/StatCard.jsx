@@ -16,16 +16,16 @@ const CHIPS = {
 export function StatCard({ label, value, sub, tone = 'neutral', icon: Icon, chip }) {
   return (
     <div className={`${cardClass} lift fade-up min-w-0 p-4 lg:p-5`}>
-      <div className="flex items-center justify-between gap-2">
-        <p className="truncate text-xs font-medium tracking-wide text-ink-2 uppercase">{label}</p>
+      <div className="flex items-start justify-between gap-2">
+        <p className="line-clamp-2 pt-1 text-[13px] leading-snug font-medium text-ink-2">{label}</p>
         {Icon && (
           <span className={`flex size-8 shrink-0 items-center justify-center rounded-xl ${CHIPS[chip ?? tone]}`}>
             <Icon className="size-4" aria-hidden="true" />
           </span>
         )}
       </div>
-      <p className={`font-display tabular mt-2 text-xl leading-tight font-bold tracking-tight break-words lg:text-[26px] ${TONES[tone]}`}>{value}</p>
-      {sub && <p className="mt-1 truncate text-xs text-ink-3" title={typeof sub === 'string' ? sub : undefined}>{sub}</p>}
+      <p className={`font-display tabular mt-1.5 text-xl leading-tight font-bold tracking-tight break-words sm:text-2xl xl:text-[26px] ${TONES[tone]}`}>{value}</p>
+      {sub && <p className="mt-1 line-clamp-2 text-xs leading-snug text-ink-3" title={typeof sub === 'string' ? sub : undefined}>{sub}</p>}
     </div>
   )
 }

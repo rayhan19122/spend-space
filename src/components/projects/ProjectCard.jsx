@@ -46,7 +46,7 @@ export function ProjectCard({ project, spentMinor, budget, onEdit, onArchive, on
 
       <dl className="mt-5 flex-1 space-y-2.5 text-sm">
         <div>
-          <dt className="text-xs font-medium tracking-wide text-ink-3 uppercase">Spent (all time)</dt>
+          <dt className="text-xs font-medium text-ink-3">Spent (all time)</dt>
           <dd className="font-display tabular mt-0.5 text-2xl font-bold tracking-tight text-ink">{money(spentMinor)}</dd>
         </div>
         {budget.budgetCount > 0 && (

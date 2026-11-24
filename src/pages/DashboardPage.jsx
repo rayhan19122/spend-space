@@ -51,7 +51,7 @@ function QuickActions({ projectId }) {
       <Button onClick={() => quickAdd.open({ type: 'income', projectId })}>
         <ArrowDownLeft className="size-4" aria-hidden="true" /> Add income
       </Button>
-      <ButtonLink to="/projects?new=1" className="col-span-2 sm:col-span-1">
+      <ButtonLink to="/projects?new=1" className="max-sm:hidden">
         <FolderPlus className="size-4" aria-hidden="true" /> Create project
       </ButtonLink>
     </div>
@@ -176,7 +176,7 @@ export default function DashboardPage() {
   const topProject = top && top.expenseMinor > 0 ? projectsById.get(top.key) : null
   const totalExpense = view.summary.expenseMinor
   const rangeLabel = range.describe(datePattern)
-  const scopeLabel = selected ? `Project: ${selected.name}` : 'Combined totals, all active projects'
+  const scopeLabel = selected ? `Project: ${selected.name}` : 'Combined totals · all active projects'
 
   if (projectsError) return <Card><ErrorState error={projectsError} onRetry={refetch} /></Card>
   if (projectsPending) {
@@ -205,18 +205,16 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-5">
-      <div className="fade-up flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div className="fade-up flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
         <div className="min-w-0">
           <p className="text-sm text-ink-3">{greeting()}{firstName ? `, ${firstName}` : ''}</p>
-          <h2 className="mt-0.5 text-2xl font-bold tracking-tight text-ink lg:text-3xl">
-            Here&apos;s where your money <span className="text-brand">went</span>.
-          </h2>
+          <h2 className="mt-0.5 text-2xl font-bold tracking-tight text-ink lg:text-[28px]">Financial overview</h2>
         </div>
         <QuickActions projectId={selected && !selected.is_archived ? selected.id : undefined} />
       </div>
 
       <div className="flex flex-col gap-3">
-        <FilterBar label="Dashboard filters">
+        <FilterBar label="Dashboard filters" collapsible activeCount={[projectParam, type].filter(Boolean).length} summary={rangeLabel}>
           <DateRangeFilter range={range} />
           <ProjectFilter active={active} archived={archived} value={projectParam} onChange={setProjectParam} />
           <TypeFilter value={type} onChange={setType} />

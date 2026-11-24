@@ -31,7 +31,7 @@ export function BalanceHero({ totals, currency, type, eyebrow, caption }) {
       </svg>
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="truncate text-xs font-medium tracking-wide text-white/75 uppercase">{eyebrow}</p>
+          <p className="truncate text-xs font-medium text-white/75">{eyebrow}</p>
           <p className="mt-1 text-sm font-medium text-white/90">{lead.label}</p>
         </div>
         <span className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-white/15 ring-1 ring-white/20">

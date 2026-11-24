@@ -14,7 +14,7 @@ function PreviewCard() {
     <div className="relative mt-10 max-w-md rounded-3xl bg-white/10 p-5 ring-1 ring-white/20 backdrop-blur-md" aria-hidden="true">
       <div className="flex items-center justify-between text-white">
         <div>
-          <p className="text-xs text-white/70 uppercase">Net balance · This month</p>
+          <p className="text-xs text-white/70">Net balance · This month</p>
           <p className="font-display mt-1 text-3xl font-bold">৳24,580</p>
         </div>
         <span className="rounded-full bg-emerald-400/20 px-2.5 py-1 text-xs font-semibold text-emerald-200">+12%</span>

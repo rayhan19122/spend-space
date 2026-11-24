@@ -1,13 +1,42 @@
+import { ChevronDown, SlidersHorizontal } from 'lucide-react'
+import { useId, useState } from 'react'
 import { DATE_PRESETS } from '../../utils/dates.js'
 import { CURRENCIES } from '../../utils/currency.js'
 import { Banner } from './Card.jsx'
 import { SelectField, TextField } from './Field.jsx'
 import { Segmented } from './Controls.jsx'
 
-export function FilterBar({ label = 'Filters', children }) {
+const BAR_CLASS =
+  'grid grid-cols-2 items-start gap-2.5 sm:flex sm:flex-wrap sm:items-end [&>*]:min-w-0 sm:[&>*]:w-44 [&_label]:mb-1 [&_label]:text-xs [&_label]:font-medium [&_label]:text-ink-3'
+
+// On phones a long row of dropdowns pushes the content below the fold, so `collapsible` folds the
+// filters behind one button that says what is applied. From the sm breakpoint up they are always shown.
+export function FilterBar({ label = 'Filters', children, collapsible = false, activeCount = 0, summary }) {
+  const [open, setOpen] = useState(false)
+  const panelId = useId()
+  if (!collapsible) {
+    return <div role="group" aria-label={label} className={BAR_CLASS}>{children}</div>
+  }
   return (
-    <div role="group" aria-label={label} className="grid grid-cols-2 items-start gap-2.5 sm:flex sm:flex-wrap sm:items-end [&>*]:min-w-0 sm:[&>*]:w-44 [&_label]:mb-1 [&_label]:text-xs [&_label]:font-medium [&_label]:text-ink-3">
-      {children}
+    <div className="min-w-0">
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((value) => !value)}
+        className="flex h-11 w-full items-center gap-2.5 rounded-xl border border-line bg-surface px-3.5 text-left text-sm shadow-card transition-colors hover:border-line-strong sm:hidden"
+      >
+        <SlidersHorizontal className="size-4 shrink-0 text-ink-2" aria-hidden="true" />
+        <span className="font-medium text-ink">Filters</span>
+        {activeCount > 0 && (
+          <span className="rounded-full bg-primary px-1.5 text-[11px] leading-5 font-semibold text-primary-ink">{activeCount}</span>
+        )}
+        {summary && <span className="min-w-0 flex-1 truncate text-right text-ink-3">{summary}</span>}
+        <ChevronDown className={`size-4 shrink-0 text-ink-3 transition-transform ${open ? 'rotate-180' : ''} ${summary ? '' : 'ml-auto'}`} aria-hidden="true" />
+      </button>
+      <div id={panelId} role="group" aria-label={label} className={`${BAR_CLASS} ${open ? 'mt-3' : 'max-sm:hidden'}`}>
+        {children}
+      </div>
     </div>
   )
 }
