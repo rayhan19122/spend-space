@@ -77,9 +77,10 @@ export default function ProjectLayout() {
 
   return (
     <div className="space-y-4">
-      <header className="fade-up">
+      {/* z-20 keeps the project switcher menu above the tabs and cards that follow. */}
+      <header className="fade-up relative z-20">
         <div
-          className="relative isolate flex min-w-0 items-center gap-4 overflow-hidden rounded-3xl border border-line p-4 lg:p-5"
+          className="relative flex min-w-0 items-center gap-4 rounded-3xl border border-line p-4 lg:p-5"
           style={{ background: `linear-gradient(120deg, color-mix(in srgb, ${project.color} 16%, var(--surface)), var(--surface) 70%)` }}
         >
           <ColorIcon icon={project.icon} color={project.color} size="lg" />

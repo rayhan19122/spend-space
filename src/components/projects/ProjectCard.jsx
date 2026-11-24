@@ -13,13 +13,13 @@ export function ProjectCard({ project, spentMinor, budget, onEdit, onArchive, on
   const money = (minor) => formatMoney(minor, project.currency)
 
   return (
-    <article className={`${cardClass} lift fade-up relative isolate flex min-w-0 flex-col overflow-hidden p-5`}>
+    <article className={`${cardClass} lift fade-up relative isolate flex min-w-0 flex-col p-5`}>
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-24"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-24 rounded-t-2xl"
         style={{ background: `linear-gradient(180deg, color-mix(in srgb, ${project.color} 16%, transparent), transparent)` }}
         aria-hidden="true"
       />
-      <div className="absolute inset-x-0 top-0 h-1" style={{ backgroundColor: project.color }} aria-hidden="true" />
+      <div className="absolute inset-x-3 top-0 h-1 rounded-b-full" style={{ backgroundColor: project.color }} aria-hidden="true" />
       <header className="flex items-start gap-3">
         <ColorIcon icon={project.icon} color={project.color} size="lg" />
         <div className="min-w-0 flex-1">

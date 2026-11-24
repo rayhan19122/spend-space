@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { Button, IconButton } from './Button.jsx'
 
 export function Segmented({ label, options, value, onChange, size = 'md', className = '' }) {
@@ -62,10 +62,23 @@ export function Pagination({ page, pageSize, total, onPage }) {
 }
 
 // A small actions menu. Closes on outside click, Escape, or choosing an item.
+const MENU_WIDTH = 224
+const EDGE_GAP = 8
+
 export function Menu({ label, trigger, items, align = 'right' }) {
   const [open, setOpen] = useState(false)
+  const [side, setSide] = useState(align)
   const root = useRef(null)
   const menuId = useId()
+
+  // Open towards whichever side has room, so the menu never runs off a narrow screen.
+  useLayoutEffect(() => {
+    if (!open || !root.current) return
+    const { left, right } = root.current.getBoundingClientRect()
+    const fitsLeftAligned = left + MENU_WIDTH <= window.innerWidth - EDGE_GAP
+    const fitsRightAligned = right - MENU_WIDTH >= EDGE_GAP
+    setSide(align === 'left' ? (fitsLeftAligned || !fitsRightAligned ? 'left' : 'right') : (fitsRightAligned || !fitsLeftAligned ? 'right' : 'left'))
+  }, [align, open])
 
   useEffect(() => {
     if (!open) return undefined
@@ -116,7 +129,7 @@ export function Menu({ label, trigger, items, align = 'right' }) {
           aria-label={label}
           onKeyDown={moveFocus}
           className={`absolute z-30 mt-2 max-h-80 w-56 overflow-y-auto rounded-2xl border border-line bg-surface p-1.5 shadow-float ${
-            align === 'right' ? 'right-0' : 'left-0'
+            side === 'right' ? 'right-0' : 'left-0'
           }`}
         >
           {items.map((item, index) =>
