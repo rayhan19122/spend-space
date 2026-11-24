@@ -1,0 +1,21 @@
+# Dependencies and build output
+node_modules
+dist
+coverage
+*.local
+
+# Secrets: never commit these. Only .env.example belongs in Git.
+.env
+.env.*
+!.env.example
+!.env.isolation.example
+
+# Tooling
+.vercel
+.supabase
+.DS_Store
+*.log
+.vscode/*
+!.vscode/extensions.json
+.idea
+.claude

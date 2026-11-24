@@ -1,0 +1,241 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-2: #f1f3f6;
+  --line: #e3e6eb;
+  --line-strong: #c4cad3;
+  --ink: #12161c;
+  --ink-2: #414a56;
+  --ink-3: #59626f;
+  --primary: #12161c;
+  --primary-hover: #2a313b;
+  --primary-ink: #ffffff;
+  --link: #1d4ed8;
+  --income: #047857;
+  --income-soft: #e4f4ed;
+  --danger: #b91c1c;
+  --danger-soft: #fbeaea;
+  --warning: #8a4b08;
+  --warning-soft: #fdf1dc;
+  --shadow: 0 1px 2px rgb(18 22 28 / 0.04), 0 1px 3px rgb(18 22 28 / 0.05);
+  --shadow-lg: 0 10px 38px rgb(18 22 28 / 0.16);
+  --backdrop: rgb(18 22 28 / 0.42);
+
+  /* Charts: validated with the dataviz palette validator against these surfaces. */
+  --chart-1: #2a78d6;
+  --chart-2: #1baf7a;
+  --chart-grid: #e8eaee;
+  --chart-axis: #c4cad3;
+  --chart-text: #59626f;
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: #0c0f13;
+  --surface: #14181e;
+  --surface-2: #1c2128;
+  --line: #262c35;
+  --line-strong: #3d4551;
+  --ink: #eef1f5;
+  --ink-2: #bcc4ce;
+  --ink-3: #9aa4b0;
+  --primary: #eef1f5;
+  --primary-hover: #d5dae1;
+  --primary-ink: #0c0f13;
+  --link: #8ab0ff;
+  --income: #34d399;
+  --income-soft: #0d2a21;
+  --danger: #f87171;
+  --danger-soft: #2e1517;
+  --warning: #fbbf24;
+  --warning-soft: #2b2110;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 38px rgb(0 0 0 / 0.55);
+  --backdrop: rgb(0 0 0 / 0.6);
+
+  --chart-1: #3987e5;
+  --chart-2: #199e70;
+  --chart-grid: #232932;
+  --chart-axis: #3d4551;
+  --chart-text: #9aa4b0;
+}
+
+@theme inline {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-ink: var(--primary-ink);
+  --color-link: var(--link);
+  --color-income: var(--income);
+  --color-income-soft: var(--income-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --shadow-card: var(--shadow);
+  --shadow-float: var(--shadow-lg);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    /* The bars and labels of an iPhone notch are handled per element with safe-area insets. */
+    background: var(--bg);
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss03';
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  button:not(:disabled),
+  summary,
+  [role='button'] {
+    cursor: pointer;
+  }
+
+  /* Native date and select controls follow the theme through color-scheme above. */
+  input[type='date'] {
+    min-height: 1.5rem;
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .scroll-x-hidden {
+    scrollbar-width: none;
+  }
+
+  .scroll-x-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Dialogs: centered on desktop, bottom sheets on phones. */
+dialog.app-dialog {
+  margin: auto auto 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: 92dvh;
+  padding: 0;
+  border: 0;
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 1rem 1rem 0 0;
+  box-shadow: var(--shadow-lg);
+}
+
+dialog.app-dialog::backdrop {
+  background: var(--backdrop);
+}
+
+dialog.app-dialog[open] {
+  animation: sheet-in 200ms ease-out;
+}
+
+@media (min-width: 640px) {
+  dialog.app-dialog {
+    margin: auto;
+    width: calc(100% - 2rem);
+    max-width: var(--dialog-width, 32rem);
+    border-radius: 1rem;
+  }
+
+  dialog.app-dialog[open] {
+    animation: dialog-in 160ms ease-out;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    transform: translateY(6px) scale(0.99);
+    opacity: 0;
+  }
+}
+
+@keyframes toast-in {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+}
+
+.toast-in {
+  animation: toast-in 180ms ease-out;
+}
+
+@keyframes shimmer {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.skeleton {
+  background: var(--surface-2);
+  border-radius: 0.5rem;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after,
+  dialog.app-dialog[open] {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .progress-fill {
+    background: Highlight !important;
+  }
+}
+
+/* Recharts draws a focus box around the whole chart when clicked. */
+.recharts-wrapper :focus:not(:focus-visible),
+.recharts-surface:focus:not(:focus-visible) {
+  outline: none;
+}
