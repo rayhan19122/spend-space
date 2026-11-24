@@ -8,7 +8,7 @@ import { Banner, Card, EmptyState, ErrorState, LoadingBlock, SectionCard, StatsS
 import { CurrencyScope, DateRangeFilter, FilterBar, ProjectFilter, TypeFilter } from '../components/common/Filters.jsx'
 import { ColorIcon } from '../components/common/Identity.jsx'
 import { StatCard } from '../components/common/StatCard.jsx'
-import { incomeExpenseNetCards } from '../components/projects/TotalsRow.jsx'
+import { BalanceHero } from '../components/projects/BalanceHero.jsx'
 import { TransactionList } from '../components/transactions/TransactionList.jsx'
 import { useQuickAdd } from '../context/QuickAddContext.jsx'
 import { useCurrencyScope } from '../hooks/useCurrencyScope.js'
@@ -32,6 +32,14 @@ import { DEFAULT_CURRENCY } from '../utils/currency.js'
 import { lastNMonthsRange } from '../utils/dates.js'
 import { formatMoney, percentOf, sumMinor } from '../utils/money.js'
 import { dueRules } from '../utils/recurring.js'
+
+function greeting(date = new Date()) {
+  const hour = date.getHours()
+  if (hour < 5) return 'Good evening'
+  if (hour < 12) return 'Good morning'
+  if (hour < 18) return 'Good afternoon'
+  return 'Good evening'
+}
 
 function QuickActions({ projectId }) {
   const quickAdd = useQuickAdd()
@@ -90,7 +98,7 @@ function BudgetUtilizationCard({ projects, projectIds, currency }) {
 
 function HighestSpendingProject({ group, project, share, currency }) {
   return (
-    <Link to={`/projects/${project.id}`} className="flex items-center gap-3 rounded-lg hover:bg-surface-2">
+    <Link to={`/projects/${project.id}`} className="-m-2 flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-surface-2">
       <ColorIcon icon={project.icon} color={project.color} size="lg" />
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-semibold text-ink">{project.name}</p>
@@ -193,21 +201,30 @@ export default function DashboardPage() {
     )
   }
 
+  const firstName = profile?.display_name?.trim()
+
   return (
-    <div className="space-y-4">
-      <div className="flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
+    <div className="space-y-5">
+      <div className="fade-up flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="min-w-0">
+          <p className="text-sm text-ink-3">{greeting()}{firstName ? `, ${firstName}` : ''}</p>
+          <h2 className="mt-0.5 text-2xl font-bold tracking-tight text-ink lg:text-3xl">
+            Here&apos;s where your money <span className="text-brand">went</span>.
+          </h2>
+        </div>
+        <QuickActions projectId={selected && !selected.is_archived ? selected.id : undefined} />
+      </div>
+
+      <div className="flex flex-col gap-3">
         <FilterBar label="Dashboard filters">
           <DateRangeFilter range={range} />
           <ProjectFilter active={active} archived={archived} value={projectParam} onChange={setProjectParam} />
           <TypeFilter value={type} onChange={setType} />
         </FilterBar>
-        <QuickActions projectId={selected && !selected.is_archived ? selected.id : undefined} />
       </div>
 
       <DueRulesBanner />
       <CurrencyScope scope={scope} />
-
-      <p className="text-xs text-ink-3">{scopeLabel} · {rangeLabel}</p>
 
       {rowsQuery.error ? (
         <Card><ErrorState error={rowsQuery.error} onRetry={rowsQuery.refetch} /></Card>
@@ -218,8 +235,11 @@ export default function DashboardPage() {
         </>
       ) : (
         <>
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-4 xl:grid-cols-5">
-            {incomeExpenseNetCards({ totals: view.summary, currency: scope.currency, type, sub: rangeLabel })}
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-3 lg:gap-4">
+            <div className="min-w-0 lg:col-span-2">
+              <BalanceHero totals={view.summary} currency={scope.currency} type={type} eyebrow={scopeLabel} caption={rangeLabel} />
+            </div>
+            <div className="grid min-w-0 grid-cols-2 gap-3 lg:grid-cols-1 lg:gap-4">
             <StatCard
               label="Active projects"
               icon={FolderKanban}
@@ -227,6 +247,7 @@ export default function DashboardPage() {
               sub={archived.length ? `${archived.length} archived` : 'None archived'}
             />
             <BudgetUtilizationCard projects={scope.scopedProjects} projectIds={projectIds} currency={scope.currency} />
+            </div>
           </div>
 
           {view.summary.count === 0 ? (

@@ -8,8 +8,8 @@ import { Dialog } from '../common/Dialog.jsx'
 import { MORE_ITEMS } from './navigation.js'
 
 const tabClass = ({ isActive }) =>
-  `flex h-14 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 text-[11px] font-medium ${
-    isActive ? 'text-ink' : 'text-ink-3'
+  `flex h-14 min-w-0 flex-1 flex-col items-center justify-center gap-1 text-[11px] font-medium transition-colors ${
+    isActive ? 'text-primary' : 'text-ink-3 hover:text-ink'
   }`
 
 export function BottomNav() {
@@ -19,8 +19,8 @@ export function BottomNav() {
 
   return (
     <>
-      <nav aria-label="Main" className="pb-safe fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface lg:hidden">
-        <div className="mx-auto flex max-w-lg items-center">
+      <nav aria-label="Main" className="pb-safe fixed inset-x-0 bottom-0 z-20 px-3 lg:hidden">
+        <div className="glass mx-auto mb-2 flex max-w-lg items-center rounded-3xl border border-line shadow-float">
           <NavLink to="/" end className={tabClass}>
             <LayoutDashboard className="size-5" aria-hidden="true" /> Dashboard
           </NavLink>
@@ -32,7 +32,7 @@ export function BottomNav() {
               type="button"
               aria-label="Add transaction"
               onClick={() => quickAdd.open({ projectId })}
-              className="flex size-12 items-center justify-center rounded-full bg-primary text-primary-ink shadow-float"
+              className="bg-brand -mt-7 flex size-14 items-center justify-center rounded-2xl text-white shadow-primary ring-4 ring-bg transition-transform active:scale-95"
             >
               <Plus className="size-6" aria-hidden="true" />
             </button>
@@ -53,7 +53,7 @@ export function BottomNav() {
               <Link
                 to={item.to}
                 onClick={() => setMoreOpen(false)}
-                className="flex h-12 items-center gap-3 rounded-lg px-2 text-sm font-medium text-ink hover:bg-surface-2"
+                className="flex h-12 items-center gap-3 rounded-xl px-2 text-sm font-medium text-ink hover:bg-surface-2"
               >
                 <item.icon className="size-5 text-ink-2" aria-hidden="true" /> {item.label}
               </Link>
@@ -63,7 +63,7 @@ export function BottomNav() {
             <button
               type="button"
               onClick={() => signOut()}
-              className="flex h-12 w-full items-center gap-3 rounded-lg px-2 text-sm font-medium text-danger hover:bg-surface-2"
+              className="flex h-12 w-full items-center gap-3 rounded-xl px-2 text-sm font-medium text-danger hover:bg-surface-2"
             >
               <LogOut className="size-5" aria-hidden="true" /> Sign out
             </button>

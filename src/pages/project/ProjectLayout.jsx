@@ -20,8 +20,8 @@ const TABS = [
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 const tabClass = ({ isActive }) =>
-  `flex h-11 shrink-0 items-center border-b-2 px-3 text-sm font-medium transition-colors lg:h-10 ${
-    isActive ? 'border-ink text-ink' : 'border-transparent text-ink-2 hover:text-ink'
+  `flex h-10 shrink-0 items-center rounded-xl px-3.5 text-sm font-medium transition-colors lg:h-9 ${
+    isActive ? 'bg-surface text-ink shadow-card' : 'text-ink-2 hover:text-ink'
   }`
 
 function ProjectSwitcher({ current }) {
@@ -77,19 +77,22 @@ export default function ProjectLayout() {
 
   return (
     <div className="space-y-4">
-      <header>
-        <div className="flex min-w-0 items-center gap-3">
+      <header className="fade-up">
+        <div
+          className="relative isolate flex min-w-0 items-center gap-4 overflow-hidden rounded-3xl border border-line p-4 lg:p-5"
+          style={{ background: `linear-gradient(120deg, color-mix(in srgb, ${project.color} 16%, var(--surface)), var(--surface) 70%)` }}
+        >
           <ColorIcon icon={project.icon} color={project.color} size="lg" />
           <div className="min-w-0">
             <div className="flex min-w-0 items-center gap-1">
-              <h2 className="truncate text-lg font-semibold tracking-tight text-ink lg:text-xl">{project.name}</h2>
+              <h2 className="truncate text-xl font-bold tracking-tight text-ink lg:text-2xl">{project.name}</h2>
               <ProjectSwitcher current={project} />
               {project.is_archived && <Badge>Archived</Badge>}
             </div>
             {project.description && <p className="truncate text-sm text-ink-2">{project.description}</p>}
           </div>
         </div>
-        <nav aria-label={`${project.name} sections`} className="scroll-x-hidden -mx-4 mt-2 flex overflow-x-auto border-b border-line px-4 lg:mx-0 lg:px-0">
+        <nav aria-label={`${project.name} sections`} className="scroll-x-hidden mt-3 flex gap-1 overflow-x-auto rounded-2xl bg-surface-2 p-1 lg:inline-flex lg:max-w-full">
           {TABS.map((tab) => (
             <NavLink key={tab.label} to={tab.to} end={tab.end} className={tabClass}>{tab.label}</NavLink>
           ))}

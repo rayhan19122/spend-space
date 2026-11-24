@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { useId, useState } from 'react'
+import { Area, AreaChart, Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { formatMoney, formatMoneyCompact } from '../../utils/money.js'
 import { Segmented } from '../common/Controls.jsx'
 
@@ -13,7 +13,7 @@ const AXIS_TICK = { fill: 'var(--chart-text)', fontSize: 12 }
 function ChartTooltip({ active, payload, label, currency }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="rounded-lg border border-line bg-surface px-3 py-2 text-xs shadow-float">
+    <div className="glass rounded-xl border border-line px-3 py-2 text-xs shadow-float">
       <p className="mb-1 font-medium text-ink">{label}</p>
       {payload.map((entry) => (
         <p key={entry.dataKey} className="flex items-center gap-2 text-ink-2">
@@ -35,17 +35,18 @@ const VIEWS = [
 // or on telling colors apart. Amounts stay integer minor units all the way into the chart.
 export function TrendChart({ data, currency, series = ['expense'], height = 240, summary }) {
   const [view, setView] = useState('chart')
+  const gradientId = useId().replace(/:/g, '')
   const active = series.map((name) => SERIES[name])
   const single = active.length === 1
 
   const axes = (
     <>
-      <CartesianGrid vertical={false} stroke="var(--chart-grid)" />
+      <CartesianGrid vertical={false} stroke="var(--chart-grid)" strokeDasharray="4 4" />
       <XAxis
         dataKey="label"
         tick={AXIS_TICK}
         tickLine={false}
-        axisLine={{ stroke: 'var(--chart-axis)' }}
+        axisLine={false}
         minTickGap={28}
         interval="preserveStartEnd"
       />
@@ -83,28 +84,44 @@ export function TrendChart({ data, currency, series = ['expense'], height = 240,
         <div role="img" aria-label={summary ?? `${active.map((s) => s.label).join(' and ')} over time. Switch to Table for exact values.`} style={{ height }}>
           <ResponsiveContainer width="100%" height="100%">
             {single ? (
-              <BarChart data={data} margin={{ top: 4, right: 4, left: 0, bottom: 0 }} barCategoryGap="20%">
+              <BarChart data={data} margin={{ top: 4, right: 4, left: 0, bottom: 0 }} barCategoryGap="22%">
+                <defs>
+                  <linearGradient id={`${gradientId}-bar`} x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor={active[0].color} stopOpacity={1} />
+                    <stop offset="100%" stopColor={active[0].color} stopOpacity={0.45} />
+                  </linearGradient>
+                </defs>
                 {axes}
                 {tooltip}
-                <Bar dataKey={active[0].key} name={active[0].label} fill={active[0].color} maxBarSize={24} radius={[4, 4, 0, 0]} isAnimationActive={false} />
+                <Bar dataKey={active[0].key} name={active[0].label} fill={`url(#${gradientId}-bar)`} maxBarSize={28} radius={[8, 8, 2, 2]} isAnimationActive={false} />
               </BarChart>
             ) : (
-              <LineChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+              <AreaChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
+                <defs>
+                  {active.map((s) => (
+                    <linearGradient key={s.key} id={`${gradientId}-${s.key}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={s.color} stopOpacity={0.28} />
+                      <stop offset="100%" stopColor={s.color} stopOpacity={0} />
+                    </linearGradient>
+                  ))}
+                </defs>
                 {axes}
                 {tooltip}
                 {active.map((s) => (
-                  <Line
+                  <Area
                     key={s.key}
+                    type="monotone"
                     dataKey={s.key}
                     name={s.label}
                     stroke={s.color}
-                    strokeWidth={2}
+                    strokeWidth={2.5}
+                    fill={`url(#${gradientId}-${s.key})`}
                     dot={false}
-                    activeDot={{ r: 4, stroke: 'var(--surface)', strokeWidth: 2 }}
+                    activeDot={{ r: 5, stroke: 'var(--surface)', strokeWidth: 2 }}
                     isAnimationActive={false}
                   />
                 ))}
-              </LineChart>
+              </AreaChart>
             )}
           </ResponsiveContainer>
         </div>

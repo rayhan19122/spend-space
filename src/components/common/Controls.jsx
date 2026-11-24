@@ -5,7 +5,7 @@ import { Button, IconButton } from './Button.jsx'
 export function Segmented({ label, options, value, onChange, size = 'md', className = '' }) {
   const heights = size === 'sm' ? 'h-9 lg:h-7 text-xs' : 'h-11 lg:h-9 text-sm'
   return (
-    <div role="radiogroup" aria-label={label} className={`inline-flex max-w-full rounded-lg bg-surface-2 p-0.5 ${className}`}>
+    <div role="radiogroup" aria-label={label} className={`inline-flex max-w-full rounded-xl bg-surface-2 p-1 ${className}`}>
       {options.map((option) => {
         const selected = option.value === value
         return (
@@ -15,7 +15,7 @@ export function Segmented({ label, options, value, onChange, size = 'md', classN
             role="radio"
             aria-checked={selected}
             onClick={() => onChange(option.value)}
-            className={`flex-1 rounded-md px-3 font-medium whitespace-nowrap transition-colors ${heights} ${
+            className={`flex-1 rounded-lg px-3 font-medium whitespace-nowrap transition-colors ${heights} ${
               selected ? 'bg-surface text-ink shadow-card' : 'text-ink-2 hover:text-ink'
             }`}
           >
@@ -28,7 +28,7 @@ export function Segmented({ label, options, value, onChange, size = 'md', classN
 }
 
 export function ProgressBar({ percent, tone = 'neutral', label }) {
-  const fill = { neutral: 'bg-chart-1', warning: 'bg-warning', danger: 'bg-danger' }[tone]
+  const fill = { neutral: 'bg-brand', warning: 'bg-warning', danger: 'bg-danger' }[tone]
   const clamped = Math.min(100, Math.max(0, percent))
   return (
     <div
@@ -115,7 +115,7 @@ export function Menu({ label, trigger, items, align = 'right' }) {
           role="menu"
           aria-label={label}
           onKeyDown={moveFocus}
-          className={`absolute z-30 mt-1.5 max-h-80 w-56 overflow-y-auto rounded-xl border border-line bg-surface p-1.5 shadow-float ${
+          className={`absolute z-30 mt-2 max-h-80 w-56 overflow-y-auto rounded-2xl border border-line bg-surface p-1.5 shadow-float ${
             align === 'right' ? 'right-0' : 'left-0'
           }`}
         >

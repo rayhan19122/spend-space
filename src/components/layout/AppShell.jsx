@@ -54,9 +54,9 @@ export function AppShell() {
         Skip to content
       </a>
       <Sidebar />
-      <div className="lg:pl-60">
+      <div className="lg:pl-64">
         <TopBar onSearch={() => setSearchOpen(true)} />
-        <main id="main" tabIndex={-1} className="mx-auto max-w-7xl px-4 pt-4 pb-[calc(6rem+env(safe-area-inset-bottom))] outline-none lg:px-8 lg:pt-6 lg:pb-10">
+        <main id="main" tabIndex={-1} className="mx-auto max-w-7xl px-4 pt-4 pb-[calc(6rem+env(safe-area-inset-bottom))] outline-none lg:px-10 lg:pt-8 lg:pb-12">
           <Suspense fallback={<LoadingBlock rows={5} />}>
             <Outlet />
           </Suspense>

@@ -8,7 +8,7 @@ export function RankedBars({ rows, currency, label }) {
   const visible = foldTail(rows)
   const largest = Math.max(...visible.map((row) => row.amountMinor), 1)
   return (
-    <ul aria-label={label} className="space-y-3">
+    <ul aria-label={label} className="space-y-4">
       {visible.map((row) => {
         const name = (
           <span className="flex min-w-0 items-center gap-2">
@@ -25,8 +25,14 @@ export function RankedBars({ rows, currency, label }) {
                 {row.percent !== undefined && <span className="ml-1.5 text-xs text-ink-3">{row.percent}%</span>}
               </span>
             </div>
-            <div className="h-1.5 rounded-full bg-surface-2" aria-hidden="true">
-              <div className="h-full rounded-full bg-chart-1" style={{ width: `${(row.amountMinor / largest) * 100}%` }} />
+            <div className="h-2 rounded-full bg-surface-2" aria-hidden="true">
+              <div
+                className={`h-full rounded-full ${row.color ? '' : 'bg-brand'}`}
+                style={{
+                  width: `${(row.amountMinor / largest) * 100}%`,
+                  ...(row.color && { background: `linear-gradient(90deg, color-mix(in srgb, ${row.color} 55%, transparent), ${row.color})` }),
+                }}
+              />
             </div>
           </li>
         )

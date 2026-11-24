@@ -6,7 +6,7 @@ import { Segmented } from './Controls.jsx'
 
 export function FilterBar({ label = 'Filters', children }) {
   return (
-    <div role="group" aria-label={label} className="grid grid-cols-2 items-start gap-3 sm:flex sm:flex-wrap sm:items-end [&>*]:min-w-0 sm:[&>*]:w-44">
+    <div role="group" aria-label={label} className="grid grid-cols-2 items-start gap-2.5 sm:flex sm:flex-wrap sm:items-end [&>*]:min-w-0 sm:[&>*]:w-44 [&_label]:mb-1 [&_label]:text-xs [&_label]:font-medium [&_label]:text-ink-3">
       {children}
     </div>
   )

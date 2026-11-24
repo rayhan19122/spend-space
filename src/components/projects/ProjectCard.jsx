@@ -13,11 +13,17 @@ export function ProjectCard({ project, spentMinor, budget, onEdit, onArchive, on
   const money = (minor) => formatMoney(minor, project.currency)
 
   return (
-    <article className={`${cardClass} flex min-w-0 flex-col p-4`}>
+    <article className={`${cardClass} lift fade-up relative isolate flex min-w-0 flex-col overflow-hidden p-5`}>
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-24"
+        style={{ background: `linear-gradient(180deg, color-mix(in srgb, ${project.color} 16%, transparent), transparent)` }}
+        aria-hidden="true"
+      />
+      <div className="absolute inset-x-0 top-0 h-1" style={{ backgroundColor: project.color }} aria-hidden="true" />
       <header className="flex items-start gap-3">
         <ColorIcon icon={project.icon} color={project.color} size="lg" />
         <div className="min-w-0 flex-1">
-          <h2 className="truncate text-sm font-semibold text-ink">{project.name}</h2>
+          <h2 className="truncate text-base font-bold text-ink">{project.name}</h2>
           <p className="truncate text-xs text-ink-3">{project.description || `${project.currency} project`}</p>
         </div>
         <Menu
@@ -38,10 +44,10 @@ export function ProjectCard({ project, spentMinor, budget, onEdit, onArchive, on
         />
       </header>
 
-      <dl className="mt-4 flex-1 space-y-2 text-sm">
-        <div className="flex items-baseline justify-between gap-3">
-          <dt className="text-ink-2">Spent (all time)</dt>
-          <dd className="tabular font-semibold text-ink">{money(spentMinor)}</dd>
+      <dl className="mt-5 flex-1 space-y-2.5 text-sm">
+        <div>
+          <dt className="text-xs font-medium tracking-wide text-ink-3 uppercase">Spent (all time)</dt>
+          <dd className="font-display tabular mt-0.5 text-2xl font-bold tracking-tight text-ink">{money(spentMinor)}</dd>
         </div>
         {budget.budgetCount > 0 && (
           <>
@@ -63,9 +69,9 @@ export function ProjectCard({ project, spentMinor, budget, onEdit, onArchive, on
         )}
       </dl>
 
-      <footer className="mt-4 flex items-center justify-between gap-2">
+      <footer className="mt-5 flex items-center justify-between gap-2 border-t border-line pt-4">
         {project.is_archived ? <Badge>Archived</Badge> : <span />}
-        <ButtonLink to={open} size="sm">
+        <ButtonLink to={open} size="sm" variant="soft">
           Open project <ArrowRight className="size-3.5" aria-hidden="true" />
         </ButtonLink>
       </footer>

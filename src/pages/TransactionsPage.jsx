@@ -9,7 +9,7 @@ export default function TransactionsPage() {
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm text-ink-2">Every transaction, across all projects.</p>
-        <ButtonLink to="/recurring" size="sm" variant="ghost" className="hidden lg:inline-flex">
+        <ButtonLink to="/recurring" size="sm" variant="ghost" className="max-lg:hidden">
           <Repeat className="size-4" aria-hidden="true" /> Recurring rules
         </ButtonLink>
       </div>
