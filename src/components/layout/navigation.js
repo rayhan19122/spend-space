@@ -6,10 +6,11 @@ export const NAV_ITEMS = [
   { to: '/transactions', label: 'Transactions', icon: Receipt },
   { to: '/budgets', label: 'Budgets', icon: Target },
   { to: '/reports', label: 'Reports', icon: PieChart },
+  { to: '/recurring', label: 'Recurring rules', icon: Repeat },
   { to: '/settings', label: 'Settings', icon: Settings },
 ]
 
-// Shown in the phone "More" sheet. Recurring rules are reached from Transactions on desktop.
+// Shown in the phone "More" sheet, in the same order as the sidebar.
 export const MORE_ITEMS = [
   { to: '/budgets', label: 'Budgets', icon: Target },
   { to: '/reports', label: 'Reports', icon: PieChart },
