@@ -1,3 +1,4 @@
+import { ChevronDown } from 'lucide-react'
 import { useId } from 'react'
 import { inputClass } from './styles.js'
 
@@ -46,15 +47,19 @@ export function SelectField({ label, error, hint, optional, hideLabel, className
   const id = useId()
   return (
     <FieldShell id={id} label={label} error={error} hint={hint} optional={optional} hideLabel={hideLabel}>
-      <select
-        id={id}
-        className={`${inputClass(error)} ${className}`}
-        aria-invalid={error ? 'true' : undefined}
-        aria-describedby={describedBy(id, error, hint)}
-        {...props}
-      >
-        {children}
-      </select>
+      {/* The browser's own arrow hugs the border; ours sits inset like the text on the left. */}
+      <div className="relative">
+        <select
+          id={id}
+          className={`${inputClass(error)} cursor-pointer appearance-none truncate pr-10 ${className}`}
+          aria-invalid={error ? 'true' : undefined}
+          aria-describedby={describedBy(id, error, hint)}
+          {...props}
+        >
+          {children}
+        </select>
+        <ChevronDown className="pointer-events-none absolute top-1/2 right-3.5 size-4 -translate-y-1/2 text-ink-3" aria-hidden="true" />
+      </div>
     </FieldShell>
   )
 }

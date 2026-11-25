@@ -67,17 +67,25 @@ const EDGE_GAP = 8
 
 export function Menu({ label, trigger, items, align = 'right' }) {
   const [open, setOpen] = useState(false)
-  const [side, setSide] = useState(align)
+  const [placement, setPlacement] = useState({ side: align, shift: 0 })
   const root = useRef(null)
   const menuId = useId()
 
-  // Open towards whichever side has room, so the menu never runs off a narrow screen.
+  // Open towards whichever side has room, so the menu never runs off a narrow screen. When neither
+  // side has room (a trigger in the middle of a phone screen), slide it back inside the edge.
+  // clientWidth, not innerWidth: a menu that overflows makes mobile browsers widen innerWidth.
   useLayoutEffect(() => {
     if (!open || !root.current) return
+    const viewport = document.documentElement.clientWidth
     const { left, right } = root.current.getBoundingClientRect()
-    const fitsLeftAligned = left + MENU_WIDTH <= window.innerWidth - EDGE_GAP
+    const fitsLeftAligned = left + MENU_WIDTH <= viewport - EDGE_GAP
     const fitsRightAligned = right - MENU_WIDTH >= EDGE_GAP
-    setSide(align === 'left' ? (fitsLeftAligned || !fitsRightAligned ? 'left' : 'right') : (fitsRightAligned || !fitsLeftAligned ? 'right' : 'left'))
+    if (fitsLeftAligned || fitsRightAligned) {
+      const preferLeft = align === 'left' ? fitsLeftAligned : !fitsRightAligned
+      setPlacement({ side: preferLeft ? 'left' : 'right', shift: 0 })
+    } else {
+      setPlacement({ side: 'left', shift: Math.max(EDGE_GAP - left, viewport - EDGE_GAP - MENU_WIDTH - left) })
+    }
   }, [align, open])
 
   useEffect(() => {
@@ -129,8 +137,9 @@ export function Menu({ label, trigger, items, align = 'right' }) {
           aria-label={label}
           onKeyDown={moveFocus}
           className={`absolute z-30 mt-2 max-h-80 w-56 overflow-y-auto glass rounded-2xl border p-1.5 ${
-            side === 'right' ? 'right-0' : 'left-0'
+            placement.side === 'right' ? 'right-0' : 'left-0'
           }`}
+          style={placement.shift ? { left: placement.shift } : undefined}
         >
           {items.map((item, index) =>
             item.heading ? (
