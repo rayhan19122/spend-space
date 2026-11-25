@@ -9,7 +9,7 @@ import { MORE_ITEMS } from './navigation.js'
 
 const tabClass = ({ isActive }) =>
   `flex h-14 min-w-0 flex-1 flex-col items-center justify-center gap-1 text-[11px] font-medium transition-colors ${
-    isActive ? 'text-primary' : 'text-ink-3 hover:text-ink'
+    isActive ? 'text-primary [&>svg]:drop-shadow-[0_2px_6px_var(--primary)]' : 'text-ink-3 hover:text-ink'
   }`
 
 export function BottomNav() {
@@ -20,7 +20,7 @@ export function BottomNav() {
   return (
     <>
       <nav aria-label="Main" className="pb-safe fixed inset-x-0 bottom-0 z-20 px-3 lg:hidden">
-        <div className="glass mx-auto mb-2 flex max-w-lg items-center rounded-3xl border border-line shadow-float">
+        <div className="liquid mx-auto mb-2 flex max-w-lg items-center rounded-[28px]">
           <NavLink to="/" end className={tabClass}>
             <LayoutDashboard className="size-5" aria-hidden="true" /> Dashboard
           </NavLink>
@@ -32,7 +32,7 @@ export function BottomNav() {
               type="button"
               aria-label="Add transaction"
               onClick={() => quickAdd.open({ projectId })}
-              className="bg-brand -mt-7 flex size-14 items-center justify-center rounded-2xl text-white shadow-primary ring-4 ring-bg transition-transform active:scale-95"
+              className="btn-glossy -mt-6 flex size-14 items-center justify-center rounded-full ring-1 ring-white/40 transition-transform active:scale-95"
             >
               <Plus className="size-6" aria-hidden="true" />
             </button>

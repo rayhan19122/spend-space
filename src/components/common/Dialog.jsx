@@ -97,7 +97,7 @@ export function ConfirmDialog({
               Type <span className="font-semibold">{requireText}</span> to confirm
             </span>
             <input
-              className="block h-11 w-full rounded-lg border border-line-strong bg-surface px-3 text-base text-ink lg:h-9 lg:text-sm"
+              className="block h-11 w-full rounded-xl border border-line-strong bg-field px-3 text-base text-ink lg:h-9 lg:text-sm"
               value={typedText}
               onChange={(event) => onTypedChange(event.target.value)}
               autoComplete="off"

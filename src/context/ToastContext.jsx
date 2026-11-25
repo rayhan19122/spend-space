@@ -41,7 +41,7 @@ export function ToastProvider({ children }) {
             <div
               key={toast.id}
               role={toast.tone === 'error' ? 'alert' : 'status'}
-              className="toast-in pointer-events-auto flex w-full max-w-sm items-start gap-2.5 rounded-xl border border-line bg-surface px-3.5 py-3 text-sm text-ink shadow-float"
+              className="toast-in pointer-events-auto flex w-full max-w-sm items-start gap-2.5 glass rounded-2xl border px-3.5 py-3 text-sm text-ink"
             >
               <Icon className={`mt-0.5 size-4 shrink-0 ${toast.tone === 'success' ? 'text-income' : 'text-danger'}`} aria-hidden="true" />
               <p className="min-w-0 flex-1">{toast.message}</p>

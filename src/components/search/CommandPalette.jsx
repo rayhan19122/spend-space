@@ -100,7 +100,7 @@ export default function CommandPalette({ onClose }) {
             value={text}
             onChange={(event) => setText(event.target.value)}
             placeholder="Search transactions, notes, projects, categories…"
-            className="block h-11 w-full rounded-lg border border-line-strong bg-surface pr-3 pl-9 text-base text-ink placeholder:text-ink-3 lg:text-sm"
+            className="block h-11 w-full rounded-xl border border-line-strong bg-field pr-3 pl-9 text-base text-ink placeholder:text-ink-3 lg:text-sm"
           />
         </label>
 

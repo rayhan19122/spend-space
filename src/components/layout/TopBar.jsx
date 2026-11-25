@@ -47,17 +47,18 @@ export function TopBar({ onSearch }) {
   const { data: profile } = useProfile()
 
   return (
-    <header className="glass sticky top-0 z-10 border-b border-line pt-[env(safe-area-inset-top)]">
-      <div className="mx-auto flex h-14 max-w-7xl items-center gap-2 px-4 lg:h-16 lg:px-10">
+    <header className="sticky top-0 z-10 pt-[env(safe-area-inset-top)]">
+      <div className="mx-auto max-w-7xl px-3 pt-2 lg:px-10 lg:pt-3">
+      <div className="liquid flex h-14 items-center gap-2 rounded-[22px] pr-1.5 pl-3 lg:h-[60px] lg:pr-2 lg:pl-5">
         <LogoMark className="size-8 shrink-0 lg:hidden" />
         <h1 className="min-w-0 flex-1 truncate text-base font-bold tracking-tight text-ink lg:text-lg">
           {pageTitle(pathname)}
         </h1>
 
-        <Button variant="secondary" aria-label="Search and quick actions" className="w-72 justify-start bg-surface-2/70 font-normal text-ink-3 shadow-none max-lg:hidden" onClick={onSearch}>
+        <Button variant="secondary" aria-label="Search and quick actions" className="w-72 justify-start rounded-full font-normal text-ink-3 max-lg:hidden" onClick={onSearch}>
           <Search className="size-4" aria-hidden="true" />
           <span className="flex-1 text-left">Search…</span>
-          <kbd className="rounded-md border border-line bg-surface px-1.5 py-0.5 font-sans text-[11px]">⌘K</kbd>
+          <kbd className="rounded-md border border-line bg-field px-1.5 py-0.5 font-sans text-[11px]">⌘K</kbd>
         </Button>
         <IconButton label="Search and quick actions" icon={Search} className="lg:hidden" onClick={onSearch} />
 
@@ -71,7 +72,7 @@ export function TopBar({ onSearch }) {
               className="flex size-11 items-center justify-center rounded-full lg:size-9"
               {...props}
             >
-              <span className="bg-brand flex size-9 items-center justify-center rounded-full text-xs font-bold text-white ring-2 ring-surface shadow-primary">
+              <span className="btn-glossy flex size-9 items-center justify-center rounded-full text-xs font-bold">
                 {initials(profile?.display_name, user?.email)}
               </span>
             </button>
@@ -82,6 +83,7 @@ export function TopBar({ onSearch }) {
             { label: 'Sign out', icon: LogOut, onSelect: () => signOut() },
           ]}
         />
+      </div>
       </div>
     </header>
   )

@@ -18,7 +18,7 @@ export default function SetupRequiredPage({ problem }) {
     <main className="flex min-h-dvh flex-col items-center justify-center bg-bg px-4 py-8">
       <div className="w-full max-w-md">
         <div className="mb-6 flex justify-center"><Logo tagline /></div>
-        <div className="rounded-2xl border border-line bg-surface p-6 shadow-card">
+        <div className="liquid rounded-3xl p-6">
           <AlertTriangle className="mb-3 size-6 text-warning" aria-hidden="true" />
           <h1 className="text-lg font-semibold text-ink">{title}</h1>
           <p className="mt-2 text-sm text-ink-2">{body}</p>

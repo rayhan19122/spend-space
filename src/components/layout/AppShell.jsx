@@ -4,6 +4,7 @@ import { useTheme } from '../../context/ThemeContext.jsx'
 import { QuickAddProvider } from '../../context/QuickAddContext.jsx'
 import { useProfile } from '../../hooks/useData.js'
 import { LoadingBlock } from '../common/Card.jsx'
+import { Ambient } from './Ambient.jsx'
 import { BottomNav } from './BottomNav.jsx'
 import { Sidebar } from './Sidebar.jsx'
 import { TopBar } from './TopBar.jsx'
@@ -53,10 +54,11 @@ export function AppShell() {
       >
         Skip to content
       </a>
+      <Ambient />
       <Sidebar />
-      <div className="lg:pl-64">
+      <div className="lg:pl-[17rem]">
         <TopBar onSearch={() => setSearchOpen(true)} />
-        <main id="main" tabIndex={-1} className="mx-auto max-w-7xl px-4 pt-4 pb-[calc(6rem+env(safe-area-inset-bottom))] outline-none lg:px-10 lg:pt-8 lg:pb-12">
+        <main id="main" tabIndex={-1} className="mx-auto max-w-7xl px-4 pt-4 pb-[calc(6rem+env(safe-area-inset-bottom))] outline-none lg:px-10 lg:pt-6 lg:pb-12">
           <Suspense fallback={<LoadingBlock rows={5} />}>
             <Outlet />
           </Suspense>

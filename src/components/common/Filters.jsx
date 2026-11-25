@@ -24,7 +24,7 @@ export function FilterBar({ label = 'Filters', children, collapsible = false, ac
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}
-        className="flex h-11 w-full items-center gap-2.5 rounded-xl border border-line bg-surface px-3.5 text-left text-sm shadow-card transition-colors hover:border-line-strong sm:hidden"
+        className="flex h-11 w-full items-center gap-2.5 glass-control rounded-xl px-3.5 text-left text-sm transition-colors sm:hidden"
       >
         <SlidersHorizontal className="size-4 shrink-0 text-ink-2" aria-hidden="true" />
         <span className="font-medium text-ink">Filters</span>

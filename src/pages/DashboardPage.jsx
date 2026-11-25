@@ -1,4 +1,5 @@
 import { ArrowDownLeft, CalendarClock, FolderKanban, FolderPlus, Plus, Receipt, Target, Trophy } from 'lucide-react'
+import { format } from 'date-fns'
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { RankedBars } from '../components/charts/RankedBars.jsx'
@@ -39,6 +40,13 @@ function greeting(date = new Date()) {
   if (hour < 12) return 'Good morning'
   if (hour < 18) return 'Good afternoon'
   return 'Good evening'
+}
+
+// The name to greet someone by: the first word that is not a title or a prefix such as "Md.".
+const NAME_PREFIXES = /^(md|mohd|muhammad|mohammad|mohammed|mr|mrs|ms|miss|dr|engr|prof|sk|sheikh)\.?$/i
+function givenName(displayName) {
+  const words = displayName?.trim().split(/\s+/).filter(Boolean) ?? []
+  return words.find((word) => !NAME_PREFIXES.test(word)) ?? words[0]
 }
 
 function QuickActions({ projectId }) {
@@ -201,14 +209,20 @@ export default function DashboardPage() {
     )
   }
 
-  const firstName = profile?.display_name?.trim()
+  const firstName = givenName(profile?.display_name)
 
   return (
     <div className="space-y-5">
       <div className="fade-up flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
         <div className="min-w-0">
-          <p className="text-sm text-ink-3">{greeting()}{firstName ? `, ${firstName}` : ''}</p>
-          <h2 className="mt-0.5 text-2xl font-bold tracking-tight text-ink lg:text-[28px]">Financial overview</h2>
+          <p className="glass-control inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium text-ink-2">
+            <span className="size-1.5 rounded-full bg-income shadow-[0_0_0_3px_color-mix(in_srgb,var(--income)_25%,transparent)]" aria-hidden="true" />
+            {format(new Date(), 'EEEE, d MMMM')}
+          </p>
+          <h2 className="mt-3 text-[28px] leading-tight font-extrabold tracking-tight text-ink lg:text-4xl">
+            {greeting()}{firstName ? <>, <span className="text-brand">{firstName}</span></> : ''}
+          </h2>
+          <p className="mt-1.5 text-sm text-ink-2">Here’s where your money stands · <span className="font-medium text-ink">{rangeLabel}</span></p>
         </div>
         <QuickActions projectId={selected && !selected.is_archived ? selected.id : undefined} />
       </div>

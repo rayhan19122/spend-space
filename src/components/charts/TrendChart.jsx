@@ -13,7 +13,7 @@ const AXIS_TICK = { fill: 'var(--chart-text)', fontSize: 12 }
 function ChartTooltip({ active, payload, label, currency }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="glass rounded-xl border border-line px-3 py-2 text-xs shadow-float">
+    <div className="glass rounded-xl border px-3 py-2 text-xs">
       <p className="mb-1 font-medium text-ink">{label}</p>
       {payload.map((entry) => (
         <p key={entry.dataKey} className="flex items-center gap-2 text-ink-2">
@@ -128,7 +128,7 @@ export function TrendChart({ data, currency, series = ['expense'], height = 240,
       ) : (
         <div className="max-h-72 overflow-y-auto">
           <table className="w-full text-sm">
-            <thead className="sticky top-0 bg-surface">
+            <thead className="sticky top-0 bg-glass-strong backdrop-blur-xl">
               <tr className="border-b border-line text-left text-xs text-ink-3">
                 <th scope="col" className="py-1.5 font-medium">Period</th>
                 {active.map((s) => <th key={s.key} scope="col" className="py-1.5 text-right font-medium">{s.label}</th>)}

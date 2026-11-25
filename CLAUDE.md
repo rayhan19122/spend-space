@@ -67,7 +67,16 @@ day-shifting.
   `@theme`. Use token classes (`bg-surface`, `text-ink-2`, `border-line`, `bg-primary-soft`, …), not raw
   colours.
 - Shared class strings (buttons, inputs, `cardClass`) live in `components/common/styles.js`.
-- Helper classes: `.bg-hero`, `.bg-brand`, `.glass`, `.lift`, `.fade-up`, `.font-display`.
+- Visual language is "liquid glass": translucent blurred panes over a drifting colour field (`<Ambient />`,
+  rendered by `AppShell` and `AuthLayout`; `body` is transparent so it shows through).
+  - Panes: `.liquid` (cards, sidebar, top bar, bottom nav).
+  - Floating layers (menus, toasts, tooltips): `.glass`, nearly opaque.
+  - Controls: `.glass-control` (secondary buttons), `.glass-thumb` (selected tab, segment or nav item),
+    `.btn-glossy` (primary).
+  - Other helpers: `.bg-hero`, `.lift`, `.fade-up`, `.font-display`.
+  - A blurred element nested in another `.liquid` pane cannot blur what is under it in Chrome, so
+    anything floating must be close to opaque.
+  - `prefers-reduced-transparency` swaps the glass for solid surfaces.
 - Layout: below `lg` (1024px) there is a top bar and a bottom nav with a central **+**. From `lg` up there
   is a fixed sidebar. The transactions table shows from `md`; phones get card rows.
 - Responsive pitfalls already hit in this codebase:

@@ -4,12 +4,12 @@
 
 :root {
   color-scheme: light;
-  --bg: #f4f5fb;
+  --bg: #eceef8;
   --surface: #ffffff;
-  --surface-2: #f0f1f8;
+  --surface-2: rgb(70 76 140 / 0.07);
   --surface-glass: rgb(255 255 255 / 0.72);
-  --line: #e4e6f0;
-  --line-strong: #cdd1df;
+  --line: rgb(30 34 80 / 0.09);
+  --line-strong: rgb(30 34 80 / 0.18);
   --ink: #0e1121;
   --ink-2: #434a60;
   --ink-3: #5b6278;
@@ -36,6 +36,21 @@
   --glow-1: rgb(99 102 241 / 0.14);
   --glow-2: rgb(168 85 247 / 0.10);
   --glow-3: rgb(16 185 129 / 0.08);
+  /* Liquid glass */
+  --glass: rgb(255 255 255 / 0.5);
+  --glass-strong: rgb(255 255 255 / 0.8);
+  --glass-pop: rgb(250 250 255 / 0.94);
+  --glass-border: rgb(255 255 255 / 0.7);
+  --glass-edge: rgb(30 34 80 / 0.08);
+  --glass-highlight: rgb(255 255 255 / 0.95);
+  --glass-sheen: rgb(255 255 255 / 0.45);
+  --glass-shadow: 0 1px 2px rgb(30 34 80 / 0.04), 0 12px 32px -14px rgb(40 44 110 / 0.22);
+  --glass-shadow-hover: 0 2px 4px rgb(30 34 80 / 0.05), 0 22px 44px -16px rgb(40 44 110 / 0.32);
+  --field: rgb(255 255 255 / 0.62);
+  --blob-1: rgb(129 140 248 / 0.55);
+  --blob-2: rgb(240 171 252 / 0.5);
+  --blob-3: rgb(94 234 212 / 0.42);
+  --blob-4: rgb(253 211 77 / 0.32);
 
   /* Charts */
   --chart-1: #5b54e8;
@@ -48,12 +63,12 @@
 
 .dark {
   color-scheme: dark;
-  --bg: #090a12;
-  --surface: #11131d;
-  --surface-2: #191c29;
+  --bg: #07080f;
+  --surface: #12141f;
+  --surface-2: rgb(255 255 255 / 0.06);
   --surface-glass: rgb(17 19 29 / 0.72);
-  --line: #232738;
-  --line-strong: #353b52;
+  --line: rgb(255 255 255 / 0.08);
+  --line-strong: rgb(255 255 255 / 0.16);
   --ink: #eef0f8;
   --ink-2: #b8bdd0;
   --ink-3: #9198ae;
@@ -80,6 +95,20 @@
   --glow-1: rgb(99 102 241 / 0.16);
   --glow-2: rgb(168 85 247 / 0.10);
   --glow-3: rgb(16 185 129 / 0.06);
+  --glass: rgb(30 33 56 / 0.42);
+  --glass-strong: rgb(22 24 42 / 0.84);
+  --glass-pop: rgb(24 26 44 / 0.95);
+  --glass-border: rgb(255 255 255 / 0.09);
+  --glass-edge: rgb(0 0 0 / 0.35);
+  --glass-highlight: rgb(255 255 255 / 0.14);
+  --glass-sheen: rgb(255 255 255 / 0.05);
+  --glass-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 36px -16px rgb(0 0 0 / 0.7);
+  --glass-shadow-hover: 0 2px 4px rgb(0 0 0 / 0.35), 0 24px 48px -16px rgb(0 0 0 / 0.8);
+  --field: rgb(255 255 255 / 0.05);
+  --blob-1: rgb(79 70 229 / 0.42);
+  --blob-2: rgb(192 38 211 / 0.28);
+  --blob-3: rgb(13 148 136 / 0.26);
+  --blob-4: rgb(37 99 235 / 0.24);
 
   --chart-1: #8b8ff9;
   --chart-1-soft: #4a4c9e;
@@ -93,6 +122,9 @@
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-display: 'Plus Jakarta Sans Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --color-surface-glass: var(--surface-glass);
+  --color-field: var(--field);
+  --color-glass: var(--glass);
+  --color-glass-strong: var(--glass-strong);
   --color-primary-soft: var(--primary-soft);
   --color-primary-soft-ink: var(--primary-soft-ink);
   --color-chart-1-soft: var(--chart-1-soft);
@@ -132,12 +164,7 @@
   body {
     margin: 0;
     min-height: 100dvh;
-    background:
-      radial-gradient(60rem 30rem at 12% -8%, var(--glow-1), transparent 60%),
-      radial-gradient(50rem 26rem at 92% -6%, var(--glow-2), transparent 60%),
-      radial-gradient(40rem 30rem at 60% 110%, var(--glow-3), transparent 60%),
-      var(--bg);
-    background-attachment: fixed;
+    background: transparent;
     color: var(--ink);
     font-family: var(--font-sans);
     font-feature-settings: 'cv11', 'ss03';
@@ -193,7 +220,9 @@
 
   .bg-hero {
     background:
-      radial-gradient(28rem 16rem at 100% 0%, rgb(255 255 255 / 0.16), transparent 60%),
+      radial-gradient(22rem 14rem at 100% 0%, rgb(255 255 255 / 0.22), transparent 60%),
+      radial-gradient(26rem 18rem at 85% 120%, rgb(236 72 153 / 0.45), transparent 60%),
+      radial-gradient(20rem 16rem at -10% 110%, rgb(45 212 191 / 0.3), transparent 60%),
       radial-gradient(20rem 14rem at 0% 100%, rgb(255 255 255 / 0.08), transparent 60%),
       linear-gradient(135deg, var(--hero-from), var(--hero-via) 55%, var(--hero-to));
   }
@@ -209,10 +238,56 @@
     color: transparent;
   }
 
+  /* Liquid glass: a translucent, blurred and saturated pane with a specular top edge, a soft
+     sheen and a hairline that keeps it readable on light backgrounds. */
+  .liquid {
+    background-color: var(--glass);
+    background-image: linear-gradient(165deg, var(--glass-sheen), transparent 45%);
+    border: 1px solid var(--glass-border);
+    box-shadow: inset 0 1px 0 var(--glass-highlight), 0 0 0 0.5px var(--glass-edge), var(--glass-shadow);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+  }
+
+  /* Floating layers (menus, toasts, tooltips) sit over content, so they are more opaque. */
   .glass {
-    background: var(--surface-glass);
-    -webkit-backdrop-filter: saturate(1.6) blur(16px);
-    backdrop-filter: saturate(1.6) blur(16px);
+    background-color: var(--glass-pop);
+    background-image: linear-gradient(165deg, var(--glass-sheen), transparent 45%);
+    border-color: var(--glass-border);
+    box-shadow: inset 0 1px 0 var(--glass-highlight), 0 0 0 0.5px var(--glass-edge), var(--shadow-lg);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    backdrop-filter: blur(30px) saturate(180%);
+  }
+
+  /* Small glass controls: secondary buttons, the selected tab or segment. */
+  .glass-control {
+    background-color: var(--glass);
+    border: 1px solid var(--glass-border);
+    box-shadow: inset 0 1px 0 var(--glass-highlight), 0 0 0 0.5px var(--glass-edge), 0 2px 6px -2px rgb(30 34 80 / 0.12);
+    -webkit-backdrop-filter: blur(14px) saturate(170%);
+    backdrop-filter: blur(14px) saturate(170%);
+  }
+
+  .glass-control:hover:not(:disabled) {
+    background-color: var(--glass-strong);
+  }
+
+  .glass-thumb {
+    background-color: var(--glass-strong);
+    box-shadow: inset 0 1px 0 var(--glass-highlight), 0 0 0 0.5px var(--glass-edge), 0 4px 12px -4px rgb(30 34 80 / 0.22);
+  }
+
+  /* The primary action: a glossy brand-coloured drop. */
+  .btn-glossy {
+    background-image:
+      linear-gradient(180deg, rgb(255 255 255 / 0.28), rgb(255 255 255 / 0) 55%),
+      linear-gradient(135deg, var(--hero-from), var(--hero-to));
+    color: #fff;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.45), inset 0 -1px 0 rgb(0 0 0 / 0.12), var(--shadow-primary);
+  }
+
+  .btn-glossy:hover:not(:disabled) {
+    filter: brightness(1.07) saturate(1.05);
   }
 
   .lift {
@@ -221,8 +296,10 @@
 
   .lift:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--line-strong);
+  }
+
+  .liquid.lift:hover {
+    box-shadow: inset 0 1px 0 var(--glass-highlight), 0 0 0 0.5px var(--glass-edge), var(--glass-shadow-hover);
   }
 
   /* Cards animate in, which gives each its own layer; raise the one whose menu is open so the
@@ -242,6 +319,96 @@
   }
 }
 
+/* The ambient colour field behind every glass pane. Soft radial blobs (no filter: blur, which is
+   costly on phones) drift slowly. */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--bg);
+}
+
+.ambient span {
+  position: absolute;
+  border-radius: 9999px;
+  will-change: transform;
+}
+
+.ambient span:nth-child(1) {
+  width: 60vmax;
+  height: 60vmax;
+  top: -22vmax;
+  left: -14vmax;
+  background: radial-gradient(closest-side, var(--blob-1), transparent);
+  animation: drift-a 26s ease-in-out infinite alternate;
+}
+
+.ambient span:nth-child(2) {
+  width: 52vmax;
+  height: 52vmax;
+  top: -16vmax;
+  right: -18vmax;
+  background: radial-gradient(closest-side, var(--blob-2), transparent);
+  animation: drift-b 32s ease-in-out infinite alternate;
+}
+
+.ambient span:nth-child(3) {
+  width: 56vmax;
+  height: 56vmax;
+  bottom: -26vmax;
+  left: 18vw;
+  background: radial-gradient(closest-side, var(--blob-3), transparent);
+  animation: drift-c 36s ease-in-out infinite alternate;
+}
+
+.ambient span:nth-child(4) {
+  width: 36vmax;
+  height: 36vmax;
+  top: 34vh;
+  right: 6vw;
+  background: radial-gradient(closest-side, var(--blob-4), transparent);
+  animation: drift-a 40s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes drift-a {
+  to {
+    transform: translate3d(8vw, 6vh, 0) scale(1.08);
+  }
+}
+
+@keyframes drift-b {
+  to {
+    transform: translate3d(-10vw, 10vh, 0) scale(0.92);
+  }
+}
+
+@keyframes drift-c {
+  to {
+    transform: translate3d(-6vw, -8vh, 0) scale(1.1);
+  }
+}
+
+/* Phones: lighter blur keeps scrolling smooth. */
+@media (max-width: 640px) {
+  .liquid {
+    -webkit-backdrop-filter: blur(18px) saturate(170%);
+    backdrop-filter: blur(18px) saturate(170%);
+  }
+}
+
+/* People who ask for less transparency get solid panes. */
+@media (prefers-reduced-transparency: reduce) {
+  :root,
+  .dark {
+    --glass: var(--surface);
+    --glass-strong: var(--surface);
+    --glass-pop: var(--surface);
+    --field: var(--surface);
+  }
+}
+
 /* Dialogs: centered on desktop, bottom sheets on phones. */
 dialog.app-dialog {
   margin: auto auto 0;
@@ -249,11 +416,15 @@ dialog.app-dialog {
   max-width: 100%;
   max-height: 92dvh;
   padding: 0;
-  border: 0;
-  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-bottom: 0;
+  background-color: var(--glass-strong);
+  background-image: linear-gradient(165deg, var(--glass-sheen), transparent 40%);
+  -webkit-backdrop-filter: blur(36px) saturate(180%);
+  backdrop-filter: blur(36px) saturate(180%);
   color: var(--ink);
-  border-radius: 1.25rem 1.25rem 0 0;
-  box-shadow: var(--shadow-lg);
+  border-radius: 1.75rem 1.75rem 0 0;
+  box-shadow: inset 0 1px 0 var(--glass-highlight), var(--shadow-lg);
 }
 
 dialog.app-dialog::backdrop {
@@ -271,7 +442,8 @@ dialog.app-dialog[open] {
     margin: auto;
     width: calc(100% - 2rem);
     max-width: var(--dialog-width, 32rem);
-    border-radius: 1.25rem;
+    border-bottom: 1px solid var(--glass-border);
+    border-radius: 1.75rem;
   }
 
   dialog.app-dialog[open] {

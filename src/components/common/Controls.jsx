@@ -16,7 +16,7 @@ export function Segmented({ label, options, value, onChange, size = 'md', classN
             aria-checked={selected}
             onClick={() => onChange(option.value)}
             className={`flex-1 rounded-lg px-3 font-medium whitespace-nowrap transition-colors ${heights} ${
-              selected ? 'bg-surface text-ink shadow-card' : 'text-ink-2 hover:text-ink'
+              selected ? 'glass-thumb text-ink' : 'text-ink-2 hover:text-ink'
             }`}
           >
             {option.label}
@@ -128,7 +128,7 @@ export function Menu({ label, trigger, items, align = 'right' }) {
           role="menu"
           aria-label={label}
           onKeyDown={moveFocus}
-          className={`absolute z-30 mt-2 max-h-80 w-56 overflow-y-auto rounded-2xl border border-line bg-surface p-1.5 shadow-float ${
+          className={`absolute z-30 mt-2 max-h-80 w-56 overflow-y-auto glass rounded-2xl border p-1.5 ${
             side === 'right' ? 'right-0' : 'left-0'
           }`}
         >

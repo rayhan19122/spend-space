@@ -1,4 +1,5 @@
 import { FolderKanban, PieChart, ShieldCheck } from 'lucide-react'
+import { Ambient } from '../../components/layout/Ambient.jsx'
 import { Logo } from '../../components/layout/Logo.jsx'
 
 const POINTS = [
@@ -11,7 +12,7 @@ const POINTS = [
 function PreviewCard() {
   const bars = [38, 62, 45, 80, 56, 92, 70]
   return (
-    <div className="relative mt-10 max-w-md rounded-3xl bg-white/10 p-5 ring-1 ring-white/20 backdrop-blur-md" aria-hidden="true">
+    <div className="relative mt-10 max-w-md rounded-3xl bg-white/10 p-5 shadow-[inset_0_1px_0_rgb(255_255_255/0.4),inset_0_0_0_1px_rgb(255_255_255/0.16),0_24px_48px_-20px_rgb(0_0_0/0.4)] backdrop-blur-xl" aria-hidden="true">
       <div className="flex items-center justify-between text-white">
         <div>
           <p className="text-xs text-white/70">Net balance · This month</p>
@@ -36,7 +37,8 @@ function PreviewCard() {
 export function AuthLayout({ title, subtitle, children, footer }) {
   return (
     <main className="grid min-h-dvh lg:grid-cols-[1.05fr_1fr]">
-      <section className="bg-hero relative isolate hidden overflow-hidden p-12 text-white lg:flex lg:flex-col lg:justify-between xl:p-16">
+      <Ambient />
+      <section className="bg-hero relative isolate m-3 hidden overflow-hidden rounded-[32px] p-12 text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.35),var(--shadow-lg)] lg:flex lg:flex-col lg:justify-between xl:p-16">
         <svg className="absolute -right-32 -bottom-32 -z-10 size-[36rem] opacity-25" viewBox="0 0 200 200" aria-hidden="true">
           {[40, 60, 80, 99].map((r) => <circle key={r} cx="100" cy="100" r={r} fill="none" stroke="white" strokeOpacity=".5" strokeWidth=".5" />)}
         </svg>
@@ -81,7 +83,7 @@ export function AuthLayout({ title, subtitle, children, footer }) {
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-ink lg:text-3xl">{title}</h1>
           {subtitle && <p className="mt-1.5 text-sm text-ink-2">{subtitle}</p>}
-          <div className="mt-7 rounded-3xl border border-line bg-surface p-5 shadow-card sm:p-6">{children}</div>
+          <div className="liquid mt-7 rounded-[28px] p-5 sm:p-6">{children}</div>
           {footer && <p className="mt-6 text-center text-sm text-ink-2">{footer}</p>}
         </div>
       </section>

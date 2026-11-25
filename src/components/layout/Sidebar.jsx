@@ -10,7 +10,7 @@ import { NAV_ITEMS } from './navigation.js'
 const navClass = ({ isActive }) =>
   `group relative flex h-10 items-center gap-3 rounded-xl px-3 text-sm font-medium transition-colors ${
     isActive
-      ? 'bg-primary-soft text-primary-soft-ink before:absolute before:inset-y-2 before:-left-3 before:w-1 before:rounded-r-full before:bg-primary'
+      ? 'glass-thumb text-ink [&>svg]:text-primary'
       : 'text-ink-2 hover:bg-surface-2 hover:text-ink'
   }`
 
@@ -20,15 +20,15 @@ export function Sidebar() {
   const { active } = useProjects()
 
   return (
-    <aside className="glass fixed inset-y-0 left-0 z-20 hidden w-64 flex-col border-r border-line lg:flex">
+    <aside className="liquid fixed inset-y-3 left-3 z-20 hidden w-60 flex-col rounded-[28px] lg:flex">
       <div className="px-5 pt-5 pb-4">
         <Link to="/" className="block rounded-lg" aria-label="SpendSpace home">
-          <Logo tagline />
+          <Logo />
         </Link>
       </div>
 
       <div className="px-3 pb-3">
-        <Button variant="primary" className="bg-brand w-full hover:opacity-95 lg:h-10" onClick={() => quickAdd.open({ projectId })}>
+        <Button variant="primary" className="w-full lg:h-10" onClick={() => quickAdd.open({ projectId })}>
           <Plus className="size-4" aria-hidden="true" /> Add transaction
         </Button>
       </div>
@@ -46,7 +46,7 @@ export function Sidebar() {
         </ul>
       </nav>
 
-      <nav aria-label="Active projects" className="mt-4 min-h-0 flex-1 overflow-y-auto border-t border-line px-3 py-4">
+      <nav aria-label="Active projects" className="mx-3 mt-4 min-h-0 flex-1 overflow-y-auto border-t border-line py-4">
         <p className="px-3 pb-2 text-[11px] font-semibold tracking-wider text-ink-3 uppercase">Your projects</p>
         {active.length === 0 ? (
           <p className="px-3 text-xs text-ink-3">None yet.</p>

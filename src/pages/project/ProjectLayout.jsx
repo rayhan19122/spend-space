@@ -21,7 +21,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 const tabClass = ({ isActive }) =>
   `flex h-10 shrink-0 items-center rounded-xl px-3.5 text-sm font-medium transition-colors lg:h-9 ${
-    isActive ? 'bg-surface text-ink shadow-card' : 'text-ink-2 hover:text-ink'
+    isActive ? 'glass-thumb text-ink' : 'text-ink-2 hover:text-ink'
   }`
 
 function ProjectSwitcher({ current }) {
@@ -80,8 +80,8 @@ export default function ProjectLayout() {
       {/* z-20 keeps the project switcher menu above the tabs and cards that follow. */}
       <header className="fade-up relative z-20">
         <div
-          className="relative flex min-w-0 items-center gap-4 rounded-3xl border border-line p-4 lg:p-5"
-          style={{ background: `linear-gradient(120deg, color-mix(in srgb, ${project.color} 16%, var(--surface)), var(--surface) 70%)` }}
+          className="liquid relative flex min-w-0 items-center gap-4 rounded-3xl p-4 lg:p-5"
+          style={{ backgroundImage: `linear-gradient(120deg, color-mix(in srgb, ${project.color} 22%, transparent), transparent 70%)` }}
         >
           <ColorIcon icon={project.icon} color={project.color} size="lg" />
           <div className="min-w-0">
@@ -93,7 +93,7 @@ export default function ProjectLayout() {
             {project.description && <p className="truncate text-sm text-ink-2">{project.description}</p>}
           </div>
         </div>
-        <nav aria-label={`${project.name} sections`} className="scroll-x-hidden mt-3 flex gap-1 overflow-x-auto rounded-2xl bg-surface-2 p-1 lg:inline-flex lg:max-w-full">
+        <nav aria-label={`${project.name} sections`} className="scroll-x-hidden mt-3 flex gap-1 overflow-x-auto liquid rounded-2xl p-1 lg:inline-flex lg:max-w-full">
           {TABS.map((tab) => (
             <NavLink key={tab.label} to={tab.to} end={tab.end} className={tabClass}>{tab.label}</NavLink>
           ))}
