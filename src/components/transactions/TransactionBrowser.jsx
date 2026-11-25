@@ -113,12 +113,13 @@ export function TransactionBrowser({ project }) {
   return (
     <div className="space-y-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="min-w-0 flex-1 sm:max-w-sm">
+        <div className="min-w-0 flex-1 sm:max-w-md">
           <TextField
             label={project ? `Search ${project.name}` : 'Search transactions'}
             hideLabel
             type="search"
             placeholder="Search title and notes…"
+            prefix={<Search className="size-4" />}
             value={searchText}
             onChange={(event) => setSearchText(event.target.value)}
           />
@@ -138,6 +139,7 @@ export function TransactionBrowser({ project }) {
       <FilterBar
         label="Transaction filters"
         collapsible
+        columns={project ? 'auto' : 'six'}
         activeCount={[projectParam && !project, categoryName, type, paymentMethod, range.preset !== 'all'].filter(Boolean).length}
         summary={SORT_OPTIONS.find((option) => option.value === sort)?.label}
       >

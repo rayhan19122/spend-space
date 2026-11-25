@@ -77,6 +77,8 @@ day-shifting.
   - A blurred element nested in another `.liquid` pane cannot blur what is under it in Chrome, so
     anything floating must be close to opaque.
   - `prefers-reduced-transparency` swaps the glass for solid surfaces.
+- Spacing: cards are padded `p-4 lg:p-5` (SectionCard included); rows of cards are `gap-4` / `space-y-4`.
+  Filter rows go through `FilterBar` (`columns="auto" | "six" | "stack"`), never ad-hoc flex-wrap widths.
 - Layout: below `lg` (1024px) there is a top bar and a bottom nav with a central **+**. From `lg` up there
   is a fixed sidebar. The transactions table shows from `md`; phones get card rows.
 - Responsive pitfalls already hit in this codebase:

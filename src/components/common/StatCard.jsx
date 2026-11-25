@@ -17,7 +17,8 @@ export function StatCard({ label, value, sub, tone = 'neutral', icon: Icon, chip
   return (
     <div className={`${cardClass} lift fade-up min-w-0 p-4 lg:p-5`}>
       <div className="flex items-start justify-between gap-2">
-        <p className="line-clamp-2 pt-1 text-[13px] leading-snug font-medium text-ink-2">{label}</p>
+        {/* Two lines are always reserved so numbers line up across a row even when one label wraps. */}
+        <p className="line-clamp-2 min-h-9 pt-1 text-[13px] leading-snug font-medium text-ink-2">{label}</p>
         {Icon && (
           <span className={`flex size-8 shrink-0 items-center justify-center rounded-xl ${CHIPS[chip ?? tone]}`}>
             <Icon className="size-4" aria-hidden="true" />

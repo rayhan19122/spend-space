@@ -197,7 +197,7 @@ export function ReportView({ project }) {
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
             {incomeExpenseNetCards({ totals: report.summary, currency: scope.currency, type, sub: rangeLabel })}
             <StatCard
-              label="Average daily spending"
+              label="Daily average"
               icon={CalendarDays}
               value={type === 'income' ? '—' : money(report.average)}
               sub={type === 'income' ? 'Hidden by the type filter' : 'Per day so far in this range'}
@@ -212,7 +212,7 @@ export function ReportView({ project }) {
             <TrendChart data={series} currency={scope.currency} series={seriesNames} height={260} />
           </SectionCard>
 
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2">
             <SectionCard title={report.metric === 'income' ? 'Income by category' : 'Spending by category'} subtitle="Share of the total shown">
               {report.byCategory.length ? (
                 <RankedBars rows={report.byCategory} currency={scope.currency} label="Totals by category" />

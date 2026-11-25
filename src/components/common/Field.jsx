@@ -21,19 +21,26 @@ const describedBy = (id, error, hint) => {
   return hint ? `${id}-hint` : undefined
 }
 
+// The text starts one small gap after the prefix, however long the prefix is (৳, Rs, CA$ or an icon).
+function prefixPadding(prefix) {
+  if (!prefix) return ''
+  if (typeof prefix !== 'string') return 'pl-9'
+  return ['pl-8', 'pl-8', 'pl-10', 'pl-12'][Math.min(prefix.length, 3)]
+}
+
 export function TextField({ label, error, hint, optional, hideLabel, className = '', prefix, ...props }) {
   const id = useId()
   return (
     <FieldShell id={id} label={label} error={error} hint={hint} optional={optional} hideLabel={hideLabel}>
       <div className="relative">
         {prefix && (
-          <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm font-medium text-ink-3" aria-hidden="true">
+          <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-base font-medium text-ink-3 lg:text-sm" aria-hidden="true">
             {prefix}
           </span>
         )}
         <input
           id={id}
-          className={`${inputClass(error)} ${prefix ? 'pl-11' : ''} ${className}`}
+          className={`${inputClass(error)} ${prefixPadding(prefix)} ${className}`}
           aria-invalid={error ? 'true' : undefined}
           aria-describedby={describedBy(id, error, hint)}
           {...props}

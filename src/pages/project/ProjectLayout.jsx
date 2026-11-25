@@ -1,5 +1,6 @@
 import { ArchiveRestore, ChevronsUpDown, FolderX, Info } from 'lucide-react'
-import { NavLink, Outlet, useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { NavLink, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Button, ButtonLink } from '../../components/common/Button.jsx'
 import { Badge, Banner, Card, EmptyState, ErrorState, Skeleton } from '../../components/common/Card.jsx'
 import { Menu } from '../../components/common/Controls.jsx'
@@ -23,6 +24,47 @@ const tabClass = ({ isActive }) =>
   `flex h-10 shrink-0 items-center rounded-xl px-3.5 text-sm font-medium transition-colors lg:h-9 ${
     isActive ? 'glass-thumb text-ink' : 'text-ink-2 hover:text-ink'
   }`
+
+// On phones the tab row scrolls sideways; keep the open tab in view and fade the cut-off edge.
+function ProjectTabs({ project }) {
+  const scroller = useRef(null)
+  const { pathname } = useLocation()
+  const [edges, setEdges] = useState({ start: false, end: false })
+
+  const measure = () => {
+    const el = scroller.current
+    if (!el) return
+    setEdges({ start: el.scrollLeft > 2, end: el.scrollLeft + el.clientWidth < el.scrollWidth - 2 })
+  }
+
+  useEffect(() => {
+    const active = scroller.current?.querySelector('[aria-current="page"]')
+    active?.scrollIntoView({ block: 'nearest', inline: 'center' })
+    measure()
+  }, [pathname])
+
+  useEffect(() => {
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [])
+
+  const fade = '1.75rem'
+  const mask = `linear-gradient(to right, ${edges.start ? 'transparent' : '#000'}, #000 ${fade}, #000 calc(100% - ${fade}), ${edges.end ? 'transparent' : '#000'})`
+  return (
+    <nav aria-label={`${project.name} sections`} className="liquid mt-3 rounded-2xl p-1 lg:inline-flex lg:max-w-full">
+      <div
+        ref={scroller}
+        onScroll={measure}
+        className="scroll-x-hidden flex gap-1 overflow-x-auto"
+        style={{ maskImage: mask, WebkitMaskImage: mask }}
+      >
+        {TABS.map((tab) => (
+          <NavLink key={tab.label} to={tab.to} end={tab.end} className={tabClass}>{tab.label}</NavLink>
+        ))}
+      </div>
+    </nav>
+  )
+}
 
 function ProjectSwitcher({ current }) {
   const { active } = useProjects()
@@ -93,11 +135,7 @@ export default function ProjectLayout() {
             {project.description && <p className="truncate text-sm text-ink-2">{project.description}</p>}
           </div>
         </div>
-        <nav aria-label={`${project.name} sections`} className="scroll-x-hidden mt-3 flex gap-1 overflow-x-auto liquid rounded-2xl p-1 lg:inline-flex lg:max-w-full">
-          {TABS.map((tab) => (
-            <NavLink key={tab.label} to={tab.to} end={tab.end} className={tabClass}>{tab.label}</NavLink>
-          ))}
-        </nav>
+        <ProjectTabs project={project} />
       </header>
 
       {project.is_archived && (

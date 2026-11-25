@@ -6,12 +6,20 @@ import { Banner } from './Card.jsx'
 import { SelectField, TextField } from './Field.jsx'
 import { Segmented } from './Controls.jsx'
 
-const BAR_CLASS =
-  'grid grid-cols-2 items-start gap-2.5 sm:flex sm:flex-wrap sm:items-end [&>*]:min-w-0 sm:[&>*]:w-44 [&_label]:mb-1 [&_label]:text-xs [&_label]:font-medium [&_label]:text-ink-3'
+const BAR_BASE =
+  'grid grid-cols-2 items-start gap-x-3 gap-y-2.5 [&>*]:min-w-0 [&_label]:mb-1 [&_label]:text-xs [&_label]:font-medium [&_label]:text-ink-3'
+// Few filters keep a comfortable width; a long set splits into even rows instead of leaving one alone.
+const COLUMNS = {
+  auto: 'sm:grid-cols-[repeat(auto-fill,minmax(10.5rem,1fr))]',
+  six: 'sm:grid-cols-3 min-[1440px]:grid-cols-6',
+  // A lone filter gets the full width on phones instead of half of it.
+  stack: 'max-sm:grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(10.5rem,1fr))]',
+}
 
 // On phones a long row of dropdowns pushes the content below the fold, so `collapsible` folds the
 // filters behind one button that says what is applied. From the sm breakpoint up they are always shown.
-export function FilterBar({ label = 'Filters', children, collapsible = false, activeCount = 0, summary }) {
+export function FilterBar({ label = 'Filters', children, collapsible = false, activeCount = 0, summary, columns = 'auto' }) {
+  const BAR_CLASS = `${BAR_BASE} ${COLUMNS[columns]}`
   const [open, setOpen] = useState(false)
   const panelId = useId()
   if (!collapsible) {

@@ -6,6 +6,7 @@ import { RankedBars } from '../components/charts/RankedBars.jsx'
 import { TrendChart } from '../components/charts/TrendChart.jsx'
 import { Button, ButtonLink } from '../components/common/Button.jsx'
 import { Banner, Card, EmptyState, ErrorState, LoadingBlock, SectionCard, StatsSkeleton } from '../components/common/Card.jsx'
+import { ProgressBar } from '../components/common/Controls.jsx'
 import { CurrencyScope, DateRangeFilter, FilterBar, ProjectFilter, TypeFilter } from '../components/common/Filters.jsx'
 import { ColorIcon } from '../components/common/Identity.jsx'
 import { StatCard } from '../components/common/StatCard.jsx'
@@ -104,15 +105,22 @@ function BudgetUtilizationCard({ projects, projectIds, currency }) {
   )
 }
 
+// Fills the card beside the trend chart: the project, its spend in large type and its share.
 function HighestSpendingProject({ group, project, share, currency }) {
   return (
-    <Link to={`/projects/${project.id}`} className="-m-2 flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-surface-2">
-      <ColorIcon icon={project.icon} color={project.color} size="lg" />
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold text-ink">{project.name}</p>
-        <p className="text-xs text-ink-3">{share}% of expenses in this view</p>
+    <Link
+      to={`/projects/${project.id}`}
+      className="-m-2 flex h-[calc(100%+1rem)] flex-col justify-center gap-4 rounded-2xl p-2 transition-colors hover:bg-surface-2"
+    >
+      <div className="flex min-w-0 items-center gap-3">
+        <ColorIcon icon={project.icon} color={project.color} size="lg" />
+        <p className="min-w-0 truncate text-sm font-semibold text-ink">{project.name}</p>
       </div>
-      <p className="tabular shrink-0 text-sm font-semibold text-ink">{formatMoney(group.expenseMinor, currency)}</p>
+      <div>
+        <p className="font-display tabular text-3xl font-bold tracking-tight text-ink">{formatMoney(group.expenseMinor, currency)}</p>
+        <p className="mt-1 text-xs text-ink-3">{share}% of expenses in this view</p>
+      </div>
+      <ProgressBar percent={share} label={`${project.name} share of expenses`} />
     </Link>
   )
 }
@@ -212,7 +220,7 @@ export default function DashboardPage() {
   const firstName = givenName(profile?.display_name)
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       <div className="fade-up flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
         <div className="min-w-0">
           <p className="glass-control inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium text-ink-2">
@@ -247,7 +255,7 @@ export default function DashboardPage() {
         </>
       ) : (
         <>
-          <div className="grid grid-cols-1 gap-3 lg:grid-cols-3 lg:gap-4">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             <div className="min-w-0 lg:col-span-2">
               <BalanceHero totals={view.summary} currency={scope.currency} type={type} eyebrow={scopeLabel} caption={rangeLabel} />
             </div>
@@ -271,7 +279,7 @@ export default function DashboardPage() {
               />
             </Card>
           ) : (
-            <div className="grid gap-4 lg:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2">
               <SectionCard title={`${metricLabel} by project`} subtitle={`${rangeLabel}. Select a project to open it.`}>
                 {view.projectBars.length ? (
                   <RankedBars rows={view.projectBars} currency={scope.currency} label={`${metricLabel} by project`} />

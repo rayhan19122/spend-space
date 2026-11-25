@@ -106,9 +106,9 @@ export default function ProjectOverviewPage() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <FilterBar label="Date filter"><DateRangeFilter range={range} /></FilterBar>
-        <div className="flex gap-2 [&>*]:flex-1 sm:[&>*]:flex-none">{addButtons}</div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="min-w-0 sm:flex-1"><FilterBar label="Date filter" columns="stack"><DateRangeFilter range={range} /></FilterBar></div>
+        <div className="grid grid-cols-2 gap-2 sm:flex">{addButtons}</div>
       </div>
 
       {rows.error ? (

@@ -11,17 +11,17 @@ export function Card({ className = '', children, ...props }) {
   )
 }
 
-export function SectionCard({ title, subtitle, action, className = '', bodyClassName = 'p-4 lg:px-6 lg:pt-4 lg:pb-6', children }) {
+export function SectionCard({ title, subtitle, action, className = '', bodyClassName = 'p-4 lg:px-5 lg:pt-4 lg:pb-5', children }) {
   return (
-    <section className={`${cardClass} fade-up min-w-0 ${className}`}>
-      <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 pt-4 lg:px-6 lg:pt-5">
+    <section className={`${cardClass} fade-up flex min-w-0 flex-col ${className}`}>
+      <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 pt-4 lg:px-5 lg:pt-5">
         <div className="min-w-0">
           <h2 className="text-[15px] font-bold text-ink">{title}</h2>
           {subtitle && <p className="mt-0.5 text-xs text-ink-3">{subtitle}</p>}
         </div>
         {action}
       </header>
-      <div className={bodyClassName}>{children}</div>
+      <div className={`min-h-0 flex-1 ${bodyClassName}`}>{children}</div>
     </section>
   )
 }

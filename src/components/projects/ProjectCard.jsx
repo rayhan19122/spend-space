@@ -13,7 +13,7 @@ export function ProjectCard({ project, spentMinor, budget, onEdit, onArchive, on
   const money = (minor) => formatMoney(minor, project.currency)
 
   return (
-    <article className={`${cardClass} lift fade-up relative isolate flex min-w-0 flex-col p-5`}>
+    <article className={`${cardClass} lift fade-up relative isolate flex min-w-0 flex-col p-4 lg:p-5`}>
       <div
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-28 rounded-t-3xl"
         style={{ background: `radial-gradient(120% 100% at 0% 0%, color-mix(in srgb, ${project.color} 26%, transparent), transparent 70%)` }}
